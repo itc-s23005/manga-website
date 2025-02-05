@@ -1,0 +1,142 @@
+/* ⭐ 背景設定 */
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('/images/library_background.png'); /* 背景画像 */
+    background-size: cover;
+    background-position: center;
+    filter: blur(5px); /* ぼかし */
+    z-index: -1;
+}
+
+
+/* 📌 コンテンツ全体 */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin-left: 250px; /* Sidebar の幅分の余白 */
+    width: calc(100% - 250px);
+    height: 100vh; /* 画面いっぱいに固定 */
+    background: rgba(255, 255, 255, 0.8); /* 透明感のある背景 */
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden; /* 内部のスクロールも禁止 */
+}
+
+/* 🏆 上部の選択された漫画（シンプルな枠線） */
+.selectedBook {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border: 2px solid #bbb;
+    border-radius: 12px;
+    padding: 20px;
+    width: 100%;
+    max-width: 800px;
+    background-color: #ffffff;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.selectedBook img {
+    width: 130px;
+    height: auto;
+    margin-right: 20px;
+}
+
+.selectedBook h2 {
+    margin: 0 0 8px 0;
+    font-size: 22px;
+}
+
+.selectedBook p {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
+.detailsButton {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.detailsButton:hover {
+    background-color: #005bb5;
+}
+
+/* 📌 縦6個×横4列のグループデザイン */
+.bookGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* 各グループ（縦6個をまとめる） */
+.bookGroup {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px;
+    border-radius: 14px;
+    border: 2px solid #999;
+    background-color: #f8f8f8;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* 各列（縦6個のブロック） */
+.bookColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    border-right: 1px dashed #bbb;
+    padding-right: 12px;
+}
+
+/* 最後の列の線を消す */
+.bookColumn:last-child {
+    border-right: none;
+}
+
+/* 各漫画アイテム */
+.bookItem {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 6px;
+    background-color: #fff;
+    transition: transform 0.2s ease;
+    height: 60px;
+}
+
+.bookItem:hover {
+    transform: scale(1.05);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.bookItem img {
+    width: 45px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.bookItem p {
+    font-size: 13px;
+    color: #333;
+    margin: 0;
+    word-break: break-word;
+    max-width: calc(100% - 55px);
+    line-height: 1.2;
+}

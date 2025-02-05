@@ -1,0 +1,105 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.homeSection {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.homeIcon {
+    margin-right: 10px;
+}
+
+.sidebarTitle {
+    font-size: 24px;
+    margin: 0;
+}
+
+.searchBar {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.publisherTitle {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.publisherList {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.publisherItem {
+    margin: 5px 0;
+    cursor: pointer;
+    color: #0070f3;
+    transition: color 0.3s ease;
+}
+
+.publisherItem:hover {
+    color: #005bb5;
+}
+
+.sidebarButton {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #0070f3;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.sidebarButton:hover {
+    background-color: #005bb5;
+}
+
+.sidebarButton img {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+}
+
+.logoutButton {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: auto;
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.logoutButton:hover {
+    background-color: #d32f2f;
+}

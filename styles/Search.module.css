@@ -1,0 +1,84 @@
+/* 🔹 検索結果ページ全体のスタイル */
+.searchContainer {
+    margin-left: 250px; /* Sidebar の幅分ずらす */
+    padding: 20px;
+    width: calc(100% - 250px);
+    min-height: 100vh;
+    background-color: white;
+}
+
+/* 🔹 検索結果のタイトル */
+.searchTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* 🔹 本のグリッド表示 */
+.bookGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+/* 🔹 各本のカード */
+.bookItem {
+    width: 150px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* 🔹 画像サイズ調整 */
+.bookItem img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* 🔹 詳細リンク */
+.bookItem a {
+    color: #0070f3;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.bookItem a:hover {
+    text-decoration: underline;
+}
+
+/* 🔹 ページネーション */
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.pagination button {
+    padding: 8px 12px;
+    border: none;
+    background-color: #0070f3;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #005bb5;
+}
+
+/* 🔹 スマホ・タブレット対応 */
+@media (max-width: 768px) {
+    .searchContainer {
+        margin-left: 0; /* 小さい画面では sidebar を考慮しない */
+        width: 100%;
+    }
+
+    .bookGrid {
+        justify-content: center;
+    }
+}

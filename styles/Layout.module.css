@@ -1,0 +1,10 @@
+.layout {
+    display: flex;
+    height: 100vh; /* 画面全体の高さを固定 */
+}
+
+.content {
+    flex: 1; /* サイドバーの横にコンテンツを表示 */
+    padding: 20px;
+    overflow-y: auto; /* 縦スクロールを許可 */
+}

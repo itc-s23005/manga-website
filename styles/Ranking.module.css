@@ -1,0 +1,89 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    margin-left: 250px;
+}
+
+.title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* 出版社選択ボタン */
+.publisherButtons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.publisherButton {
+    padding: 10px 15px;
+    border: none;
+    background: #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.publisherButton:hover {
+    background: #bbb;
+}
+
+.publisherButton.active {
+    background: black;
+    color: white;
+}
+
+/* ランキングリスト */
+.bookList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 800px;
+}
+
+.bookItem {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    transition: transform 0.2s ease;
+}
+
+.bookItem:hover {
+    transform: scale(1.05);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.bookItem img {
+    width: 50px;
+    height: auto;
+    margin-right: 15px;
+}
+
+.bookItem h3 {
+    font-size: 16px;
+    margin: 0;
+}
+
+.bookItem p {
+    font-size: 14px;
+    color: #333;
+    margin: 0;
+}
+
+.rankNumber {
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 10px;
+    color: #0070f3;
+}

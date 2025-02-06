@@ -15,6 +15,9 @@
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    cursor: pointer; /* クリックできることを明示 */
+    text-decoration: none; /* リンクの下線を消す */
+    color: inherit; /* デフォルトの色を維持 */
 }
 
 .homeIcon {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 import Sidebar from '../components/Sidebar';
 
@@ -34,21 +35,18 @@ export default function Home() {
 
             {/* ⭐ 上部に1冊だけ固定表示 */}
             {featuredBook && (
-                <div className={styles.selectedBook}>
-                    <img src={featuredBook.largeImageUrl || '/images/no_image.png'} alt={featuredBook.title} />
-                    <div>
-                        <h2>{featuredBook.title}</h2>
-                        <p>著者名: {featuredBook.author}</p>
-                        <p>値段: {featuredBook.itemPrice} 円</p>
-                        <p>出版社: {featuredBook.publisherName}</p>
-                        <button
-                            className={styles.detailsButton}
-                            onClick={() => window.open(featuredBook.itemUrl, '_blank')}
-                        >
-                            詳細・購入へ
-                        </button>
+                <Link href={`/book/${featuredBook.isbn}`} passHref>
+                    <div className={styles.selectedBook}>
+                        <img src={featuredBook.largeImageUrl || '/images/no_image.png'} alt={featuredBook.title} />
+                        <div>
+                            <h2>{featuredBook.title}</h2>
+                            <p>著者名: {featuredBook.author}</p>
+                            <p>値段: {featuredBook.itemPrice} 円</p>
+                            <p>出版社: {featuredBook.publisherName}</p>
+                            <button className={styles.detailsButton}>詳細を見る</button>
+                        </div>
                     </div>
-                </div>
+                </Link>
             )}
 
             {/* ⭐ 6×4のグループで漫画を表示 */}
@@ -60,10 +58,12 @@ export default function Home() {
                                 {books
                                     .slice(groupIndex * 24 + colIndex * 6, groupIndex * 24 + colIndex * 6 + 6)
                                     .map((book, index) => (
-                                        <div key={index} className={styles.bookItem}>
-                                            <img src={book.Item.mediumImageUrl || '/images/no_image.png'} alt={book.Item.title} />
-                                            <p>{book.Item.title}</p>
-                                        </div>
+                                        <Link key={index} href={`/book/${book.Item.isbn}`} passHref>
+                                            <div className={styles.bookItem}>
+                                                <img src={book.Item.mediumImageUrl || '/images/no_image.png'} alt={book.Item.title} />
+                                                <p>{book.Item.title}</p>
+                                            </div>
+                                        </Link>
                                     ))}
                             </div>
                         ))}

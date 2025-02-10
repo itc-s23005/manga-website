@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import styles from '../styles/Ranking.module.css';
 import Sidebar from '../components/Sidebar';
 
@@ -48,18 +49,20 @@ export default function Ranking() {
                 {/* ランキングリスト */}
                 <div className={styles.bookList}>
                     {rankingBooks.map((book, index) => (
-                        <div key={index} className={styles.bookItem}>
-                            <span className={styles.rankNumber}>{index + 1}位</span>
-                            <img src={book.Item.mediumImageUrl || '/images/no_image.png'} alt={book.Item.title} />
-                            <div className={styles.bookDetails}>
-                                <h3>{book.Item.title}</h3>
-                                <p>著者名：{book.Item.author}</p>
-                                <p>価格：{book.Item.itemPrice} 円</p>
-                                <a href={book.Item.itemUrl} target="_blank" rel="noopener noreferrer">
-                                    詳細・購入へ
-                                </a>
+                        <Link key={index} href={`/book/${book.Item.isbn}`} passHref>
+                            <div className={styles.bookItem}>
+                                <span className={styles.rankNumber}>{index + 1}位</span>
+                                <img src={book.Item.mediumImageUrl || '/images/no_image.png'} alt={book.Item.title} />
+                                <div className={styles.bookDetails}>
+                                    <h3>{book.Item.title}</h3>
+                                    <p>著者名：{book.Item.author}</p>
+                                    <p>価格：{book.Item.itemPrice} 円</p>
+                                    <a href={book.Item.itemUrl} target="_blank" rel="noopener noreferrer">
+                                        詳細・購入へ
+                                    </a>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>

@@ -5,13 +5,9 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-image: url('/images/library_background.png'); /* 背景画像 */
-    background-size: cover;
-    background-position: center;
-    filter: blur(5px); /* ぼかし */
+    background-color: #f4f4f4; /* 落ち着いたグレー系の背景色 */
     z-index: -1;
 }
-
 
 /* 📌 コンテンツ全体 */
 .container {
@@ -21,11 +17,11 @@
     padding: 20px;
     margin-left: 250px; /* Sidebar の幅分の余白 */
     width: calc(100% - 250px);
-    height: 100vh; /* 画面いっぱいに固定 */
-    background: rgba(255, 255, 255, 0.8); /* 透明感のある背景 */
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    overflow: hidden; /* 内部のスクロールも禁止 */
+    overflow: hidden; /* 🔹 スクロールなし */
 }
 
 /* 🏆 上部の選択された漫画（シンプルな枠線） */

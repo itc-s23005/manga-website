@@ -5,15 +5,29 @@ import styles from '../styles/Sidebar.module.css';
 import Image from 'next/image';
 
 export default function Sidebar() {
-    const [searchQuery, setSearchQuery] = useState(""); // 🔍 検索ワードを管理
+    const [searchQuery, setSearchQuery] = useState("");
+    const [publisherQuery, setPublisherQuery] = useState(""); // 🔍 出版社検索用
     const router = useRouter();
 
-    // 🔍 Enterキーを押したら検索ページに遷移
-    const handleKeyDown = (e) => {
+    // 🔍 漫画タイトル検索（Enterキーで実行）
+    const handleTitleSearch = (e) => {
         if (e.key === 'Enter' && searchQuery.trim() !== "") {
             router.push(`/search?query=${encodeURIComponent(searchQuery)}`);
         }
     };
+
+    // 🔍 出版社検索（Enterキーで実行 → 直接出版社のページへ遷移）
+    const handlePublisherSearch = (e) => {
+        if (e.key === 'Enter' && publisherQuery.trim() !== "") {
+            router.push(`/publisher?name=${encodeURIComponent(publisherQuery)}`);
+        }
+    };
+
+    // **出版社一覧**
+    const publishers = [
+        "集英社", "講談社", "KADOKAWA", "小学館", "秋田書店",
+        "白泉社", "スクウェア・エニックス", "双葉社", "徳間書店", "芳文社"
+    ];
 
     return (
         <div className={styles.sidebar}>
@@ -24,30 +38,37 @@ export default function Sidebar() {
                 </div>
             </Link>
 
-            {/* 🔍 Enterで検索できるフォーム */}
+            {/* 🔍 漫画タイトル検索 */}
             <input
                 type="text"
                 placeholder="漫画タイトル"
                 className={styles.searchBar}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyDown={handleKeyDown} // ⬅ Enterキーで検索
+                onKeyDown={handleTitleSearch}
             />
 
-            <h3 className={styles.publisherTitle}>出版社選択</h3>
-            <input type="text" placeholder="出版社検索" className={styles.searchBar} />
+            <h3 className={styles.publisherTitle}>出版社検索</h3>
 
+            {/* 🔍 出版社検索バー */}
+            <input
+                type="text"
+                placeholder="出版社を入力（Enterで検索）"
+                className={styles.searchBar}
+                value={publisherQuery}
+                onChange={(e) => setPublisherQuery(e.target.value)}
+                onKeyDown={handlePublisherSearch}
+            />
+
+            {/* 📌 出版社一覧 */}
             <ul className={styles.publisherList}>
-                <li className={styles.publisherItem}>・集英社</li>
-                <li className={styles.publisherItem}>・講談社</li>
-                <li className={styles.publisherItem}>・KADOKAWA</li>
-                <li className={styles.publisherItem}>・小学館</li>
-                <li className={styles.publisherItem}>・秋田書店</li>
-                <li className={styles.publisherItem}>・白泉社</li>
-                <li className={styles.publisherItem}>・スクウェア・エニックス</li>
-                <li className={styles.publisherItem}>・双葉社</li>
-                <li className={styles.publisherItem}>・徳間書店</li>
-                <li className={styles.publisherItem}>・芳文社</li>
+                {publishers.map((publisher, index) => (
+                    <li key={index} className={styles.publisherItem}>
+                        <Link href={`/publisher?name=${encodeURIComponent(publisher)}`}>
+                            ・{publisher}
+                        </Link>
+                    </li>
+                ))}
             </ul>
 
             <Link href="/ranking">

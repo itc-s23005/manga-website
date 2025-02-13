@@ -8,20 +8,18 @@
     padding: 20px;
     border-right: 1px solid #ddd;
     box-sizing: border-box;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* 🔹 サイドバーのスクロール禁止 */
 }
 
 .homeSection {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-    cursor: pointer; /* クリックできることを明示 */
-    text-decoration: none; /* リンクの下線を消す */
-    color: inherit; /* デフォルトの色を維持 */
-}
-
-.homeIcon {
-    margin-right: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
 }
 
 .sidebarTitle {
@@ -47,6 +45,7 @@
     list-style-type: none;
     padding: 0;
     margin-bottom: 20px;
+    flex-grow: 1; /* 🔹 高さを均等に配分 */
 }
 
 .publisherItem {
@@ -92,7 +91,7 @@
     display: block;
     width: 100%;
     padding: 10px;
-    margin-top: auto;
+    margin-top: auto; /* 🔹 ログアウトボタンを一番下に固定 */
     background-color: #f44336;
     color: #fff;
     border: none;

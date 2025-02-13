@@ -1,0 +1,85 @@
+.container {
+    display: flex;
+    min-height: 100vh;
+    height: 100vh; /* 🔹 画面の高さを固定 */
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    margin-left: 250px; /* Sidebar の幅と揃える */
+    overflow-y: hidden; /* 🔹 これで余分なスクロールを防ぐ */
+    height: 100%;
+}
+
+.sidebar {
+    width: 250px; /* Sidebar の幅を固定 */
+    position: fixed; /* 🔹 Sidebar を固定 */
+    left: 0;
+    top: 0;
+    height: 100vh;
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.bookGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center; /* 🔹 本の一覧を中央寄せ */
+    padding-bottom: 20px; /* 🔹 ページネーションと離す */
+}
+
+.bookItem {
+    width: 150px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.bookItem img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.bookItem p {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* 🔹 ページネーションのスタイル */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+.pagination button {
+    margin: 0 10px;
+    padding: 10px 15px;
+    background-color: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.pagination button:hover {
+    background-color: #005bb5;
+}
+
+.pagination span {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 10px;
+}

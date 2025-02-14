@@ -3,11 +3,13 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/Sidebar.module.css';
 import Image from 'next/image';
+import { getAuth, signOut } from "firebase/auth"; // 🔍 Firebase Authをインポート
 
 export default function Sidebar() {
     const [searchQuery, setSearchQuery] = useState("");
     const [publisherQuery, setPublisherQuery] = useState(""); // 🔍 出版社検索用
     const router = useRouter();
+    const auth = getAuth(); // ✅ Firebase Authインスタンスを取得
 
     // 🔍 漫画タイトル検索（Enterキーで実行）
     const handleTitleSearch = (e) => {
@@ -16,10 +18,21 @@ export default function Sidebar() {
         }
     };
 
-    // 🔍 出版社検索（Enterキーで実行 → 直接出版社のページへ遷移）
+    // 🔍 出版社検索（Enterキーで実行）
     const handlePublisherSearch = (e) => {
         if (e.key === 'Enter' && publisherQuery.trim() !== "") {
             router.push(`/publisher?name=${encodeURIComponent(publisherQuery)}`);
+        }
+    };
+
+    // 🚀 **ログアウト処理**
+    const handleLogout = async () => {
+        try {
+            await signOut(auth); // 🔍 Firebaseからログアウト
+            console.log("✅ ログアウト成功");
+            router.push("/login"); // 🚀 ログイン画面へリダイレクト
+        } catch (error) {
+            console.error("🔴 ログアウト失敗:", error);
         }
     };
 
@@ -83,7 +96,10 @@ export default function Sidebar() {
                 <span>保存した作品</span>
             </button>
 
-            <button className={styles.logoutButton}>Logout</button>
+            {/* 🚀 ログアウトボタン */}
+            <button className={styles.logoutButton} onClick={handleLogout}>
+                Logout
+            </button>
         </div>
     );
 }

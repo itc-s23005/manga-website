@@ -1,29 +1,54 @@
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import styles from '../styles/Home.module.css';
-import Sidebar from '../components/Sidebar';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../lib/firebaseConfig"; // ✅ Firebase Authのインポート
+import styles from "../styles/Home.module.css";
+import Sidebar from "../components/Sidebar";
 
 export default function Home() {
+    const router = useRouter();
     const [books, setBooks] = useState([]);
     const [featuredBook, setFeaturedBook] = useState(null);
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchBooks = async () => {
-            try {
-                const response = await fetch('/api/books');
-                if (!response.ok) throw new Error('Failed to fetch');
-                const data = await response.json();
-
-                if (data.Items && data.Items.length > 0) {
-                    setFeaturedBook(data.Items[0].Item);
-                    setBooks(data.Items.slice(1));
-                }
-            } catch (error) {
-                console.error('Error fetching books:', error);
+        // ✅ ユーザーのログイン状態を確認
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            if (!currentUser) {
+                router.replace("/login"); // ✅ 未ログインなら `/login` へリダイレクト
+            } else {
+                setUser(currentUser);
+                setLoading(false); // ✅ ログイン済みなら表示を続行
             }
-        };
-        fetchBooks();
-    }, []);
+        });
+
+        return () => unsubscribe();
+    }, [router]);
+
+    useEffect(() => {
+        if (!loading && user) {
+            const fetchBooks = async () => {
+                try {
+                    const response = await fetch("/api/books");
+                    if (!response.ok) throw new Error("Failed to fetch");
+                    const data = await response.json();
+
+                    if (data.Items && data.Items.length > 0) {
+                        setFeaturedBook(data.Items[0].Item);
+                        setBooks(data.Items.slice(1));
+                    }
+                } catch (error) {
+                    console.error("Error fetching books:", error);
+                }
+            };
+            fetchBooks();
+        }
+    }, [loading, user]); // ✅ `user` のチェックを追加
+
+    if (loading) return <p>ログインを確認中...</p>; // 🔄 ログイン確認中
+    if (!user) return <p>ログインしてください</p>; // ❌ 未ログインの時のメッセージ
 
     return (
         <div className={styles.container}>
@@ -37,7 +62,7 @@ export default function Home() {
             {featuredBook && (
                 <Link href={`/book/${featuredBook.isbn}`} passHref>
                     <div className={styles.selectedBook}>
-                        <img src={featuredBook.largeImageUrl || '/images/no_image.png'} alt={featuredBook.title} />
+                        <img src={featuredBook.largeImageUrl || "/images/no_image.png"} alt={featuredBook.title} />
                         <div>
                             <h2>{featuredBook.title}</h2>
                             <p>著者名: {featuredBook.author}</p>
@@ -60,7 +85,7 @@ export default function Home() {
                                     .map((book, index) => (
                                         <Link key={index} href={`/book/${book.Item.isbn}`} passHref>
                                             <div className={styles.bookItem}>
-                                                <img src={book.Item.mediumImageUrl || '/images/no_image.png'} alt={book.Item.title} />
+                                                <img src={book.Item.mediumImageUrl || "/images/no_image.png"} alt={book.Item.title} />
                                                 <p>{book.Item.title}</p>
                                             </div>
                                         </Link>

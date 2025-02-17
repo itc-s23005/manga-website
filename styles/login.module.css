@@ -4,37 +4,41 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: white;
+    background: url('/images/library_background.png') no-repeat center center fixed; /* ✅ 画像パス修正 */
+    background-size: cover;
 }
 
 .title {
     font-size: 24px;
     font-weight: bold;
-    color: black;
+    color: red; /* ✅ 文字の色を赤に */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7); /* ✅ 影を強調して視認性向上 */
 }
 
 .box {
-    background: white;
+    background: rgba(255, 255, 255, 0.9); /* ✅ 透明度を調整（読みやすさ向上） */
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 300px;
+    width: 320px; /* ✅ 少し広げて余裕を持たせる */
 }
 
 .googleButton {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 15px;
-    padding: 10px 15px;
+    padding: 12px 18px; /* ✅ クリックしやすいように調整 */
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    background: #4285F4;
+    background: #d32f2f; /* ✅ Googleボタンを赤に */
     color: white;
+    transition: background 0.3s ease-in-out;
 }
+
 .googleButton:hover {
-    background: #357ae8;
+    background: #b71c1c; /* ✅ ホバー時の色を暗めに */
 }

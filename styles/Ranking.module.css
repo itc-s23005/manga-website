@@ -1,3 +1,4 @@
+/* ⭐ 全体のコンテナ */
 .container {
     display: flex;
     flex-direction: row;
@@ -5,22 +6,26 @@
     background: rgba(255, 255, 255, 0.8);
 }
 
+/* 📌 メインコンテンツエリア */
 .content {
     flex: 1;
     padding: 20px;
-    margin-left: 250px;
+    margin-left: 250px; /* Sidebar の幅分調整 */
 }
 
+/* 🏆 タイトル */
 .title {
     font-size: 24px;
+    font-weight: bold;
     margin-bottom: 20px;
 }
 
-/* 出版社選択ボタン */
+/* 📌 出版社選択ボタン */
 .publisherButtons {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .publisherButton {
@@ -29,19 +34,22 @@
     background: #ddd;
     border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, transform 0.2s ease;
+    font-size: 14px;
 }
 
 .publisherButton:hover {
     background: #bbb;
+    transform: scale(1.05);
 }
 
 .publisherButton.active {
     background: black;
     color: white;
+    font-weight: bold;
 }
 
-/* ランキングリスト */
+/* 📌 ランキングリスト */
 .bookList {
     display: flex;
     flex-direction: column;
@@ -49,6 +57,7 @@
     max-width: 800px;
 }
 
+/* 📌 各漫画アイテム */
 .bookItem {
     display: flex;
     align-items: center;
@@ -56,34 +65,68 @@
     border-radius: 8px;
     border: 1px solid #ddd;
     background-color: #fff;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+    max-width: 750px;
+    justify-content: space-between; /* いいねボタンを右端に配置 */
 }
 
 .bookItem:hover {
-    transform: scale(1.05);
+    transform: scale(1.03);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* 📌 漫画の画像 */
 .bookItem img {
-    width: 50px;
-    height: auto;
+    width: 60px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
     margin-right: 15px;
 }
 
-.bookItem h3 {
-    font-size: 16px;
-    margin: 0;
-}
-
-.bookItem p {
-    font-size: 14px;
-    color: #333;
-    margin: 0;
-}
-
+/* 📌 ランキング順位 */
 .rankNumber {
     font-size: 20px;
     font-weight: bold;
-    margin-right: 10px;
+    margin-right: 15px;
     color: #0070f3;
+}
+
+/* 📌 漫画タイトル */
+.bookItem h3 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    flex: 1;
+}
+
+/* 📌 追加情報（著者・出版社など） */
+.bookItem p {
+    font-size: 14px;
+    color: #555;
+    margin: 0;
+}
+
+/* ✅ いいねボタンを右側に配置 */
+.likeButton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #888;
+    transition: color 0.2s ease, transform 0.2s ease;
+    margin-left: auto; /* いいねボタンを右側に配置 */
+}
+
+.likeButton:hover {
+    color: #ff4081;
+    transform: scale(1.2);
+}
+
+/* ✅ いいね済みのボタン */
+.liked {
+    color: #ff4081;
+    font-size: 20px;
+    font-weight: bold;
 }

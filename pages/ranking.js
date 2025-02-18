@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styles from '../styles/Ranking.module.css';
 import Sidebar from '../components/Sidebar';
+import { auth } from '../lib/firebaseConfig';
+import { onAuthStateChanged } from 'firebase/auth';
+import { likeBook, unlikeBook, getLikedBooks } from '../lib/firestore';
 
 const publishers = [
     "集英社", "KADOKAWA", "小学館", "秋田書店", "白泉社",
@@ -11,6 +14,24 @@ const publishers = [
 export default function Ranking() {
     const [selectedPublisher, setSelectedPublisher] = useState("集英社");
     const [rankingBooks, setRankingBooks] = useState([]);
+    const [user, setUser] = useState(null);
+    const [likedBooks, setLikedBooks] = useState({});
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+            setUser(currentUser);
+            if (currentUser) {
+                const liked = await getLikedBooks(currentUser.uid);
+                setLikedBooks(
+                    liked.reduce((acc, book) => {
+                        acc[book.isbn] = book.id;
+                        return acc;
+                    }, {})
+                );
+            }
+        });
+        return () => unsubscribe();
+    }, []);
 
     useEffect(() => {
         const fetchRankingBooks = async () => {
@@ -25,6 +46,29 @@ export default function Ranking() {
         };
         fetchRankingBooks();
     }, [selectedPublisher]);
+
+    // いいねボタンの処理
+    const toggleLike = async (book, event) => {
+        event.preventDefault(); // クリック時の遷移を防ぐ
+        if (!user) return alert("ログインしてください");
+
+        if (likedBooks[book.isbn]) {
+            await unlikeBook(likedBooks[book.isbn]);
+            setLikedBooks((prev) => {
+                const newLikes = { ...prev };
+                delete newLikes[book.isbn];
+                return newLikes;
+            });
+        } else {
+            const newDocId = await likeBook(user.uid, book);
+            if (newDocId) {
+                setLikedBooks((prev) => ({
+                    ...prev,
+                    [book.isbn]: newDocId,
+                }));
+            }
+        }
+    };
 
     return (
         <div className={styles.container}>
@@ -61,6 +105,13 @@ export default function Ranking() {
                                         詳細・購入へ
                                     </a>
                                 </div>
+                                {/* いいねボタン */}
+                                <button
+                                    className={`${styles.likeButton} ${likedBooks[book.Item.isbn] ? styles.liked : ''}`}
+                                    onClick={(event) => toggleLike(book.Item, event)}
+                                >
+                                    {likedBooks[book.Item.isbn] ? "❤️" : "🤍"}
+                                </button>
                             </div>
                         </Link>
                     ))}

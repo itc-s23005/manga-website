@@ -1,15 +1,38 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/Sidebar.module.css';
 import Image from 'next/image';
-import { getAuth, signOut } from "firebase/auth"; // 🔍 Firebase Authをインポート
+import { getAuth, signOut, onAuthStateChanged } from "firebase/auth"; // 🔍 Firebase Authをインポート
+import { getLikedBooks } from "../lib/firestore"; // 🔥 Firestore からデータを取得
 
 export default function Sidebar() {
     const [searchQuery, setSearchQuery] = useState("");
     const [publisherQuery, setPublisherQuery] = useState(""); // 🔍 出版社検索用
+    const [savedCount, setSavedCount] = useState(0); // ✅ 保存した作品数
+    const [user, setUser] = useState(null);
     const router = useRouter();
-    const auth = getAuth(); // ✅ Firebase Authインスタンスを取得
+    const auth = getAuth(); // ✅ Firebase Auth インスタンスを取得
+
+    useEffect(() => {
+        // 🔥 ログイン状態を監視
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+            if (currentUser) {
+                setUser(currentUser);
+                fetchSavedBooks(currentUser.uid);
+            } else {
+                setUser(null);
+                setSavedCount(0);
+            }
+        });
+        return () => unsubscribe();
+    }, []);
+
+    // ✅ Firestore から「保存した作品」を取得
+    const fetchSavedBooks = async (userId) => {
+        const likedBooks = await getLikedBooks(userId);
+        setSavedCount(likedBooks.length);
+    };
 
     // 🔍 漫画タイトル検索（Enterキーで実行）
     const handleTitleSearch = (e) => {
@@ -91,10 +114,13 @@ export default function Sidebar() {
                 </button>
             </Link>
 
-            <button className={`${styles.sidebarButton} ${styles.likeButton}`}>
-                <Image src="/images/like.png" alt="Like Icon" width={30} height={30} />
-                <span>保存した作品</span>
-            </button>
+            {/* ✅ 保存した作品ページへのボタン */}
+            <Link href="/saved">
+                <button className={`${styles.sidebarButton} ${styles.likeButton}`}>
+                    <Image src="/images/like.png" alt="Like Icon" width={30} height={30} />
+                    <span>保存した作品 ({savedCount})</span> {/* 🔥 いいね数を表示 */}
+                </button>
+            </Link>
 
             {/* 🚀 ログアウトボタン */}
             <button className={styles.logoutButton} onClick={handleLogout}>

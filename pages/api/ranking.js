@@ -3,7 +3,7 @@ export default async function handler(req, res) {
         const publisher = req.query.publisher || "集英社"; // デフォルトは集英社
 
         // 🔹 APIリクエストURLを生成
-        const url = `${process.env.NEXT_PUBLIC_RAKUTEN_API_URL}?applicationId=${process.env.NEXT_PUBLIC_RAKUTEN_API_KEY}&booksGenreId=001001&format=json&sort=sales&hits=10&publisherName=${encodeURIComponent(publisher)}`;
+        const url = `${process.env.NEXT_PUBLIC_RAKUTEN_API_URL}?applicationId=${process.env.NEXT_PUBLIC_RAKUTEN_API_KEY}&booksGenreId=001001&format=json&sort=sales&availability=1&hits=20&publisherName=${encodeURIComponent(publisher)}`;
 
         console.log("Fetching ranking data from:", url); // デバッグ用ログ
 
@@ -19,9 +19,15 @@ export default async function handler(req, res) {
         }
 
         const data = await response.json();
-        console.log(`Fetched ${data.Items.length} books for publisher: ${publisher}`); // デバッグログ
+        console.log(`Fetched ${data.Items.length} books for publisher: ${publisher}`, data.Items); // デバッグログ
 
-        res.status(200).json(data);
+        // 🔹 未発売の漫画を除外
+        const filteredBooks = data.Items.filter((book) => {
+            if (!book.Item.salesDate) return true; // 発売日情報がない場合は許容
+            return !book.Item.salesDate.includes("発売予定"); // "発売予定" の場合は除外
+        });
+
+        res.status(200).json({ Items: filteredBooks.slice(0, 10) }); // top10のみ返す
     } catch (error) {
         console.error("Error fetching ranking data:", error);
         res.status(500).json({ error: "Failed to fetch ranking data", details: error.message });

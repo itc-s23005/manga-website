@@ -1,85 +1,148 @@
+/* ⭐ 背景設定 */
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f4f4f4;
+    z-index: -1;
+}
+
+/* 📌 コンテンツ全体 */
 .container {
     display: flex;
     min-height: 100vh;
-    height: 100vh; /* 🔹 画面の高さを固定 */
+    height: 100vh;
 }
 
 .content {
     flex: 1;
-    padding: 20px;
-    margin-left: 250px; /* Sidebar の幅と揃える */
-    overflow-y: hidden; /* 🔹 これで余分なスクロールを防ぐ */
+    padding: 24px;
+    margin-left: 270px; /* Sidebar の幅に合わせる */
+    overflow-y: auto;
     height: 100%;
+    background-color: #fdfdfd;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
+/* 📖 サイドバー */
 .sidebar {
-    width: 250px; /* Sidebar の幅を固定 */
-    position: fixed; /* 🔹 Sidebar を固定 */
+    width: 270px;
+    position: fixed;
     left: 0;
     top: 0;
     height: 100vh;
-    background-color: #fff;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
     z-index: 10;
+    padding: 20px;
 }
+
+/* 📌 タイトル */
 .title {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 28px;
+    color: #2d2d2d;
 }
 
+/* 📚 漫画グリッド */
 .bookGrid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center; /* 🔹 本の一覧を中央寄せ */
-    padding-bottom: 20px; /* 🔹 ページネーションと離す */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 24px;
+    justify-items: center;
+    padding-bottom: 40px;
 }
 
+/* 📖 漫画アイテム */
 .bookItem {
-    width: 150px;
+    width: 190px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 14px;
     text-align: center;
-    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
 }
 
+.bookItem:hover {
+    transform: scale(1.06);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* 📷 漫画画像 */
 .bookItem img {
     width: 100%;
-    height: auto;
+    height: 230px;
+    object-fit: cover;
     border-radius: 8px;
 }
 
+/* 📝 漫画タイトル */
 .bookItem p {
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+    color: #333;
+    text-align: center;
+    line-height: 1.3;
 }
 
-/* 🔹 ページネーションのスタイル */
+/* ❤️ いいねボタン */
+.likeButton {
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #bbb;
+    transition: color 0.2s ease, transform 0.2s ease;
+    margin-top: 10px;
+}
+
+.likeButton:hover {
+    color: #ff4081;
+    transform: scale(1.25);
+}
+
+.liked {
+    color: #ff4081;
+    font-size: 24px;
+}
+
+/* 📄 ページネーション */
 .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
-    padding-bottom: 20px;
+    margin-top: 24px;
+    padding-bottom: 24px;
+    gap: 16px;
 }
 
 .pagination button {
-    margin: 0 10px;
-    padding: 10px 15px;
+    padding: 10px 18px;
     background-color: #0070f3;
-    color: white;
+    color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .pagination button:hover {
     background-color: #005bb5;
+    transform: scale(1.05);
 }
 
 .pagination span {
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0 10px;
+    font-size: 17px;
+    font-weight: 600;
+    color: #333;
 }

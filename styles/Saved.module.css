@@ -1,71 +1,166 @@
-/* 📌 styles/Saved.module.css */
+/* ⭐ 背景設定 */
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f4f4f4;
+    z-index: -1;
+}
 
+/* 📌 コンテンツ全体 */
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    margin-left: 250px;
-    width: calc(100% - 250px);
+    margin-left: 270px; /* Sidebar の幅に合わせる */
+    width: calc(100% - 270px);
+    max-width: 100%; /* ✅ 横幅を画面いっぱいに */
     background: rgba(255, 255, 255, 0.95);
     border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    overflow-x: hidden; /* ✅ 横スクロール削除 */
 }
 
 .title {
-    font-size: 24px;
-    margin-bottom: 20px;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 24px;
+    color: #ff4081;
 }
 
+/* 📚 本リスト */
 .bookList {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); /* ✅ 横幅190pxに設定 */
+    gap: 24px;
+    width: 100%;
+    max-width: 100%; /* ✅ 横幅制限解除 */
+    padding-bottom: 40px;
+    justify-items: center;
 }
 
+/* 📖 各本アイテム */
 .bookItem {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
+    width: 190px; /* ✅ 幅を調整 */
+    height: 300px; /* ✅ 高さを調整 */
+    padding: 14px;
+    border-radius: 10px;
     background-color: #fff;
+    border: 2px solid #f1f1f1;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
 }
 
 .bookItem:hover {
-    transform: scale(1.05);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-6px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
 }
 
+/* 🖼️ 表紙画像 */
 .bookImage {
-    width: 100px;
-    height: auto;
-    margin-bottom: 10px;
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 12px;
 }
 
+/* 📄 タイトル */
 .bookTitle {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
+    color: #333;
     text-align: center;
+    margin-top: 10px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
+/* ❤️ いいねボタン */
+.likeButton {
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #bbb;
+    transition: color 0.2s ease, transform 0.2s ease;
+    margin-top: 8px;
+}
+
+.likeButton:hover {
+    color: #ff4081;
+    transform: scale(1.25);
+}
+
+.liked {
+    color: #ff4081;
+    font-size: 24px;
+}
+
+/* 🗑️ 削除ボタン */
 .unlikeButton {
     background-color: #ff4d4d;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     padding: 6px 12px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    font-size: 14px;
+    margin-top: 8px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .unlikeButton:hover {
-    background-color: #cc0000;
+    background-color: #d63031;
+    transform: scale(1.1);
 }
 
+/* 🗒️ 保存作品がない場合 */
 .emptyMessage {
     font-size: 18px;
     color: #666;
+    margin-top: 40px;
+    text-align: center;
+}
+
+/* 📄 ページネーション */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+    padding-bottom: 24px;
+    gap: 16px;
+}
+
+.pagination button {
+    padding: 10px 18px;
+    background-color: #0070f3;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.pagination button:hover {
+    background-color: #005bb5;
+    transform: scale(1.05);
+}
+
+.pagination span {
+    font-size: 17px;
+    font-weight: 600;
+    color: #333;
 }

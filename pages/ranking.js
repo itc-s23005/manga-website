@@ -75,7 +75,7 @@ export default function Ranking() {
             <Sidebar />
 
             <div className={styles.content}>
-                <h1>{selectedPublisher} 売上ランキング top10</h1>
+                <h1 style={{textAlign: 'center'}}>{selectedPublisher} 売上ランキング top10</h1>
 
                 {/* 出版社選択ボタン */}
                 <div className={styles.publisherButtons}>
@@ -96,7 +96,7 @@ export default function Ranking() {
                         <Link key={index} href={`/book/${book.Item.isbn}`} passHref>
                             <div className={styles.bookItem}>
                                 <span className={styles.rankNumber}>{index + 1}位</span>
-                                <img src={book.Item.mediumImageUrl || '/images/no_image.png'} alt={book.Item.title} />
+                                <img src={book.Item.mediumImageUrl || '/images/no_image.png'} alt={book.Item.title}/>
                                 <div className={styles.bookDetails}>
                                     <h3>{book.Item.title}</h3>
                                     <p>著者名：{book.Item.author}</p>

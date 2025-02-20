@@ -5,7 +5,7 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: "検索ワードが必要です" });
         }
 
-        const hitsPerPage = 20; // 1ページあたりの表示件数
+        const hitsPerPage = 24; // 1ページあたりの表示件数
         const url = `${process.env.NEXT_PUBLIC_RAKUTEN_API_URL}?applicationId=${process.env.NEXT_PUBLIC_RAKUTEN_API_KEY}&format=json&sort=sales&hits=${hitsPerPage}&page=${page}&booksGenreId=001001&title=${encodeURIComponent(query)}&keyword=${encodeURIComponent(query)}&availability=1`;
 
         const response = await fetch(url);

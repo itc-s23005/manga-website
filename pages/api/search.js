@@ -6,7 +6,7 @@ export default async function handler(req, res) {
         }
 
         const hitsPerPage = 20; // 1ページあたりの表示件数
-        const url = `${process.env.NEXT_PUBLIC_RAKUTEN_API_URL}?applicationId=${process.env.NEXT_PUBLIC_RAKUTEN_API_KEY}&format=json&sort=sales&hits=${hitsPerPage}&page=${page}&booksGenreId=001001&title=${encodeURIComponent(query)}&keyword=${encodeURIComponent(query)}`;
+        const url = `${process.env.NEXT_PUBLIC_RAKUTEN_API_URL}?applicationId=${process.env.NEXT_PUBLIC_RAKUTEN_API_KEY}&format=json&sort=sales&hits=${hitsPerPage}&page=${page}&booksGenreId=001001&title=${encodeURIComponent(query)}&keyword=${encodeURIComponent(query)}&availability=1`;
 
         const response = await fetch(url);
         if (!response.ok) {

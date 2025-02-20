@@ -5,7 +5,7 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: "出版社名が必要です" });
         }
 
-        const url = `${process.env.NEXT_PUBLIC_RAKUTEN_API_URL}?applicationId=${process.env.NEXT_PUBLIC_RAKUTEN_API_KEY}&booksGenreId=001001&format=json&hits=24&page=${page}&publisherName=${encodeURIComponent(name)}`;
+        const url = `${process.env.NEXT_PUBLIC_RAKUTEN_API_URL}?applicationId=${process.env.NEXT_PUBLIC_RAKUTEN_API_KEY}&booksGenreId=001001&format=json&hits=24&page=${page}&publisherName=${encodeURIComponent(name)}&availability=1`;
 
         const response = await fetch(url);
         if (!response.ok) {

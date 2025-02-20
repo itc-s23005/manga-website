@@ -20,13 +20,11 @@ export default function Saved() {
         return () => unsubscribe();
     }, []);
 
-    // 🔥 Firestore から保存した作品を取得
     const fetchSavedBooks = async (userId) => {
         const liked = await getLikedBooks(userId);
         setSavedBooks(liked);
     };
 
-    // 🔥 作品を削除
     const handleUnlike = async (docId) => {
         await unlikeBook(docId);
         setSavedBooks((prev) => prev.filter((book) => book.id !== docId));
@@ -35,10 +33,10 @@ export default function Saved() {
     return (
         <div className={styles.container}>
             <Sidebar />
-            <h2 className={styles.title}>保存した作品</h2>
+            <h2 className={styles.title}>💖 保存した作品</h2>
             <div className={styles.bookList}>
                 {savedBooks.length === 0 ? (
-                    <p className={styles.emptyMessage}>保存された作品がありません</p>
+                    <p className={styles.emptyMessage}>📂 保存された作品がありません</p>
                 ) : (
                     savedBooks.map((book) => (
                         <div key={book.id} className={styles.bookItem}>
@@ -47,12 +45,12 @@ export default function Saved() {
                                 alt={book.title}
                                 className={styles.bookImage}
                             />
-                            <p className={styles.bookTitle}>{book.title}</p>
+                            <p className={styles.bookTitle} title={book.title}>{book.title}</p>
                             <button
                                 className={styles.unlikeButton}
                                 onClick={() => handleUnlike(book.id)}
                             >
-                                ❌ 削除
+                                🗑️ 削除
                             </button>
                         </div>
                     ))

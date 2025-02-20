@@ -7,6 +7,7 @@
     height: 100vh;
     background-color: #f4f4f4;
     z-index: -1;
+    overflow-x: hidden;
 }
 
 /* 📌 コンテンツ全体 */
@@ -20,9 +21,10 @@
     background: rgba(255, 255, 255, 0.95);
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
 }
 
-/* 🏆 上部の特集された漫画（横幅を広げる） */
+/* 🏆 上部の特集された漫画 */
 .selectedBook {
     display: flex;
     align-items: center;
@@ -30,15 +32,16 @@
     margin-bottom: 20px;
     padding: 30px;
     width: 100%;
-    max-width: 1200px; /* ✅ 横幅を広げる */
+    max-width: 100%;
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
     gap: 20px;
+    box-sizing: border-box;
 }
 
 .selectedBook img {
-    width: 180px; /* ✅ 画像を少し大きく */
+    width: 180px;
     height: auto;
     border-radius: 8px;
 }
@@ -48,17 +51,16 @@
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    max-width: 1000px; /* ✅ 詳細部分の横幅を広げる */
 }
 
 .selectedBook h2 {
+    font-size: 26px;
     margin: 0 0 8px 0;
-    font-size: 26px; /* ✅ タイトルを大きく */
 }
 
 .selectedBook p {
+    font-size: 16px;
     margin: 4px 0;
-    font-size: 16px; /* ✅ 文字を少し大きく */
 }
 
 /* 📌 縦6個×横4列のグループデザイン */
@@ -67,48 +69,37 @@
     flex-direction: column;
     gap: 20px;
     width: 100%;
-    max-width: 1200px;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
-/* 各グループ（縦6個をまとめる） */
+/* ✅ 各グループ（縦6個の漫画） */
 .bookGroup {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 横4列 */
+    gap: 8px; /* 漫画間の空間を狭める */
     padding: 14px;
     border-radius: 14px;
     border: 2px solid #ccc;
     background-color: #f8f8f8;
     box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.08);
-}
-
-/* 各列（縦6個のブロック） */
-.bookColumn {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    flex: 1;
-    border-right: 1px dashed #bbb;
-    padding-right: 12px;
-}
-
-/* 最後の列の線を消す */
-.bookColumn:last-child {
-    border-right: none;
+    width: 90%; /* ✅ 横幅を縮めて中央寄せ */
+    margin: 0 auto;
 }
 
 /* 📌 各漫画アイテム */
 .bookItem {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* ✅ ここを追加して「♡を右側」に配置 */
+    justify-content: space-between;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 8px;
     background-color: #fff;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 240px; /* ✅ 横幅を狭める */
     height: 80px;
-    width: 252px; /* ✅ ここは変更しない */
+    box-sizing: border-box;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .bookItem:hover {
@@ -118,8 +109,9 @@
 
 /* 📌 漫画画像 */
 .bookItem img {
-    width: 60px;
+    width: 55px; /* ✅ 少し小さくして見栄え調整 */
     height: auto;
+    margin-right: 8px;
     border-radius: 5px;
 }
 
@@ -127,22 +119,23 @@
 .bookItem p {
     font-size: 14px;
     color: #333;
-    margin: 0;
     font-weight: bold;
-    word-break: break-word;
-    max-width: calc(100% - 75px);
-    line-height: 1.2;
+    margin: 0;
+    max-width: calc(100% - 80px); /* ✅ 画像といいねボタンを考慮 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* ✅ いいねボタンを右側に配置 */
+/* ✅ いいねボタン */
 .likeButton {
     background: transparent;
     border: none;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 20px; /* 大きさ調整 */
     color: #888;
+    margin-left: auto;
     transition: color 0.2s ease, transform 0.2s ease;
-    margin-left: auto; /* ✅ これで右側に配置 */
 }
 
 .likeButton:hover {
@@ -150,9 +143,8 @@
     transform: scale(1.2);
 }
 
-/* ✅ いいね済みのボタン */
 .liked {
     color: #ff4081;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
 }

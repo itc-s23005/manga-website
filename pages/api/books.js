@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
     try {
-        const url = `${process.env.NEXT_PUBLIC_RAKUTEN_API_URL}?applicationId=${process.env.NEXT_PUBLIC_RAKUTEN_API_KEY}&booksGenreId=001001&format=json&hits=25&sort=-releaseDate&availability=1`;
+        const url = `${process.env.NEXT_PUBLIC_RAKUTEN_API_URL}?applicationId=${process.env.NEXT_PUBLIC_RAKUTEN_API_KEY}&booksGenreId=001001&format=json&hits=29&sort=-releaseDate&availability=1`;
 
         const response = await fetch(url);
         if (!response.ok) {

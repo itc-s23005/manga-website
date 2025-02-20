@@ -58,9 +58,8 @@ export default function Home() {
     if (loading) return <p>ログインを確認中...</p>;
     if (!user) return <p>ログインしてください</p>;
 
-    // ✅ いいねボタンの動作
     const toggleLike = async (book, event) => {
-        event.preventDefault(); // ✅ いいねボタンを押した時に詳細ページに飛ばないようにする
+        event.preventDefault();
 
         if (likedBooks[book.isbn]) {
             await unlikeBook(likedBooks[book.isbn]);
@@ -85,7 +84,6 @@ export default function Home() {
             <div className={styles.background}></div>
             <Sidebar />
 
-            {/* ⭐ 特集の1冊 */}
             {featuredBook && (
                 <Link href={`/book/${featuredBook.isbn}`} passHref>
                     <div className={styles.selectedBook}>
@@ -98,35 +96,29 @@ export default function Home() {
                             <p>著者名: {featuredBook.author}</p>
                             <p>値段: {featuredBook.itemPrice} 円</p>
                             <p>出版社: {featuredBook.publisherName}</p>
-
-                            {/* ✅ いいねボタンを追加 */}
                             <button
                                 className={`${styles.likeButton} ${likedBooks[featuredBook.isbn] ? styles.liked : ""}`}
                                 onClick={(event) => toggleLike(featuredBook, event)}
                             >
                                 {likedBooks[featuredBook.isbn] ? "❤️" : "🤍"}
                             </button>
-
                             <button className={styles.detailsButton}>詳細を見る</button>
                         </div>
                     </div>
                 </Link>
             )}
 
-            {/* ⭐ 漫画リスト（6×4 のレイアウト） */}
             <div className={styles.bookGrid}>
-                {Array.from({ length: Math.ceil(books.length / 24) }, (_, groupIndex) => (
+                {Array.from({ length: Math.ceil(books.length / 28) }, (_, groupIndex) => (
                     <div key={groupIndex} className={styles.bookGroup}>
                         {Array.from({ length: 4 }, (_, colIndex) => (
                             <div key={colIndex} className={styles.bookColumn}>
-                                {books.slice(groupIndex * 24 + colIndex * 6, groupIndex * 24 + colIndex * 6 + 6)
+                                {books.slice(groupIndex * 28 + colIndex * 7, groupIndex * 28 + colIndex * 7 + 7)
                                     .map((book, index) => (
                                         <Link key={index} href={`/book/${book.Item.isbn}`} passHref>
                                             <div className={styles.bookItem}>
                                                 <img src={book.Item.mediumImageUrl || "/images/no_image.png"} alt={book.Item.title} />
                                                 <p>{book.Item.title}</p>
-
-                                                {/* ✅ いいねボタン */}
                                                 <button
                                                     className={`${styles.likeButton} ${likedBooks[book.Item.isbn] ? styles.liked : ""}`}
                                                     onClick={(event) => toggleLike(book.Item, event)}

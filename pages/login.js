@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, setPersistence, browserSessionPersistence } from "firebase/auth";
 import { useRouter } from "next/router";
 import { auth } from "../lib/firebaseConfig";
-import styles from "../styles/login.module.css"; // ✅ CSS Modules を適用
+import styles from "../styles/login.module.css";
 
 export default function Login() {
     const router = useRouter();
@@ -10,13 +10,12 @@ export default function Login() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // ✅ ログイン状態を監視し、ログイン済みならトップページへ遷移
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 console.log("✅ ユーザーがログイン済み:", user);
-                router.replace("/");  // ✅ `replace` に変更（戻るボタンで戻らない）
+                router.replace("/");  // ログイン済みならホームへリダイレクト
             } else {
-                setLoading(false);  // ✅ ログイン状態の確認完了
+                setLoading(false);  // ログイン状態確認完了
             }
         });
 
@@ -26,9 +25,33 @@ export default function Login() {
     const handleGoogleLogin = async () => {
         try {
             console.log("🟢 ログインボタンが押されました");
+
+            // 既存のセッションをサインアウト
+            await signOut(auth);
+
+            // セッションをブラウザセッションストレージに設定
+            await setPersistence(auth, browserSessionPersistence);
+
+            // 強制的にアカウント選択画面を表示
+            provider.setCustomParameters({
+                prompt: "select_account"
+            });
+
+            // Googleログインポップアップを表示
             const result = await signInWithPopup(auth, provider);
-            console.log("✅ ログイン成功:", result.user);
-            router.replace("/");  // ✅ 成功後、`/index` へ遷移
+
+            if (result?.user) {
+                console.log("✅ ログイン成功:", result.user);
+
+                // 管理者用メールの確認（環境変数から取得）
+                const adminGmails = process.env.NEXT_PUBLIC_ADMIN_GMAILS?.split(',') || [];
+                if (adminGmails.includes(result.user.email)) {
+                    router.push('/admin');  // 管理者なら/adminへ
+                } else {
+                    router.push('/');       // 一般ユーザーはホームへ
+                }
+            }
+
         } catch (error) {
             console.error("🔴 ログイン失敗:", error);
         }
@@ -38,7 +61,7 @@ export default function Login() {
         <div className={styles.container}>
             <h1 className={styles.title}>とりあえずログインしてください</h1>
             <div className={styles.box}>
-                {!loading && ( // ✅ ローディング中はボタンを非表示
+                {!loading && (
                     <button className={styles.googleButton} onClick={handleGoogleLogin}>
                         Googleでログイン
                     </button>

@@ -3,19 +3,18 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/Sidebar.module.css';
 import Image from 'next/image';
-import { getAuth, signOut, onAuthStateChanged } from "firebase/auth"; // 🔍 Firebase Authをインポート
-import { getLikedBooks } from "../lib/firestore"; // 🔥 Firestore からデータを取得
+import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+import { getLikedBooks } from "../lib/firestore";
 
 export default function Sidebar() {
     const [searchQuery, setSearchQuery] = useState("");
-    const [publisherQuery, setPublisherQuery] = useState(""); // 🔍 出版社検索用
-    const [savedCount, setSavedCount] = useState(0); // ✅ 保存した作品数
+    const [publisherQuery, setPublisherQuery] = useState("");
+    const [savedCount, setSavedCount] = useState(0);
     const [user, setUser] = useState(null);
     const router = useRouter();
-    const auth = getAuth(); // ✅ Firebase Auth インスタンスを取得
+    const auth = getAuth();
 
     useEffect(() => {
-        // 🔥 ログイン状態を監視
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             if (currentUser) {
                 setUser(currentUser);
@@ -28,38 +27,33 @@ export default function Sidebar() {
         return () => unsubscribe();
     }, []);
 
-    // ✅ Firestore から「保存した作品」を取得
     const fetchSavedBooks = async (userId) => {
         const likedBooks = await getLikedBooks(userId);
         setSavedCount(likedBooks.length);
     };
 
-    // 🔍 漫画タイトル検索（Enterキーで実行）
     const handleTitleSearch = (e) => {
         if (e.key === 'Enter' && searchQuery.trim() !== "") {
             router.push(`/search?query=${encodeURIComponent(searchQuery)}`);
         }
     };
 
-    // 🔍 出版社検索（Enterキーで実行）
     const handlePublisherSearch = (e) => {
         if (e.key === 'Enter' && publisherQuery.trim() !== "") {
             router.push(`/publisher?name=${encodeURIComponent(publisherQuery)}`);
         }
     };
 
-    // 🚀 **ログアウト処理**
     const handleLogout = async () => {
         try {
-            await signOut(auth); // 🔍 Firebaseからログアウト
+            await signOut(auth);
             console.log("✅ ログアウト成功");
-            router.push("/login"); // 🚀 ログイン画面へリダイレクト
+            router.push("/login");
         } catch (error) {
             console.error("🔴 ログアウト失敗:", error);
         }
     };
 
-    // **出版社一覧**
     const publishers = [
         "集英社", "講談社", "KADOKAWA", "小学館", "秋田書店",
         "白泉社", "スクウェア・エニックス", "双葉社", "徳間書店", "芳文社"
@@ -74,7 +68,6 @@ export default function Sidebar() {
                 </div>
             </Link>
 
-            {/* 🔍 漫画タイトル検索 */}
             <input
                 type="text"
                 placeholder="漫画タイトル"
@@ -86,7 +79,6 @@ export default function Sidebar() {
 
             <h3 className={styles.publisherTitle}>出版社検索</h3>
 
-            {/* 🔍 出版社検索バー */}
             <input
                 type="text"
                 placeholder="出版社を入力（Enterで検索）"
@@ -96,7 +88,6 @@ export default function Sidebar() {
                 onKeyDown={handlePublisherSearch}
             />
 
-            {/* 📌 出版社一覧 */}
             <ul className={styles.publisherList}>
                 {publishers.map((publisher, index) => (
                     <li key={index} className={styles.publisherItem}>
@@ -114,18 +105,30 @@ export default function Sidebar() {
                 </button>
             </Link>
 
-            {/* ✅ 保存した作品ページへのボタン */}
             <Link href="/saved">
                 <button className={`${styles.sidebarButton} ${styles.likeButton}`}>
                     <Image src="/images/like.png" alt="Like Icon" width={30} height={30} />
-                    <span>保存した作品 ({savedCount})</span> {/* 🔥 いいね数を表示 */}
+                    <span>保存した作品 ({savedCount})</span>
                 </button>
             </Link>
 
-            {/* 🚀 ログアウトボタン */}
             <button className={styles.logoutButton} onClick={handleLogout}>
                 Logout
             </button>
+
+            {/* ✅ Rakuten Web Services Attribution (ログアウトボタンの下に追加) */}
+            <div style={{ marginTop: '15px', textAlign: 'center' }}>
+                <a href="https://webservice.rakuten.co.jp/" target="_blank" rel="noopener noreferrer">
+                    <img
+                        src="https://webservice.rakuten.co.jp/img/credit/200709/credit_22121.gif"
+                        alt="Rakuten Web Service Center"
+                        title="Rakuten Web Service Center"
+                        width="221"
+                        height="21"
+                        style={{ border: 0 }}
+                    />
+                </a>
+            </div>
         </div>
     );
 }

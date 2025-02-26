@@ -12,16 +12,15 @@
 /* 📌 コンテンツ全体 */
 .container {
     display: flex;
-    min-height: 100vh;
-    height: 100vh;
+    min-height: 100vh; /* ✅ 高さは最小限にし、コンテンツサイズに応じて伸びる */
 }
 
+/* 📄 メインコンテンツ */
 .content {
     flex: 1;
     padding: 24px;
     margin-left: 270px; /* Sidebar の幅に合わせる */
-    overflow-y: auto;
-    height: 100%;
+    overflow-y: auto; /* ✅ スクロールは content にのみ適用 */
     background-color: #fdfdfd;
     border-radius: 12px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
